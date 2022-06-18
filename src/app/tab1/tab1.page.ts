@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
 
 
-//import * as markers_ from 'src/assets/synthetic_markers.json';
+import * as markers_ from 'src/assets/synthetic_markers.json';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class Tab1Page {
   constructor() {}
 
   ngOnInit() {
-    //this.markers = markers_["default"];
+    this.markers = markers_["default"];
     this.initMap();
   }
 
@@ -41,45 +41,38 @@ export class Tab1Page {
       },
     });
 
-    //this.addMarkerCluster();
+    this.addMarkerCluster();
     
   }
 
-  // async addMarkerCluster(){   
-  //   console.log("running addMarkerCluster") 
-  //   let spotsCoords = [], spotObject = [];
+  async addMarkerCluster(){   
+    console.log("running addMarkerCluster") 
+    let spotsCoords = [], spotObject = [];
 
-  //   for(let i = 0; i < this.markers.length; i++){
-  //     // if(typeof spots[i].location.coordinates[0] != 'number' || typeof spots[i].location.coordinates[1] != 'number')
-  //     //   console.log(spots[i].location.coordinates);
-  //     let marker = {
-  //       //position: new LatLng(spots[i].location.coordinates[1], spots[i].location.coordinates[0]),
-  //       coordinate: {
-  //         lat: this.markers[i].location.coordinates[1],
-  //         lng: this.markers[i].location.coordinates[0]
-  //       },
-  //       // spotObject: spots[i]
-  //     }
-  //     spotsCoords.push(marker);
-  //   }
+    for(let i = 0; i < this.markers.length; i++){
 
-  //   let results = await this.map.addMarkers(spotsCoords)
-  //   await this.map.enableClustering();
-  //   await this.map.setOnMarkerClickListener((marker) => {
-  //     console.log(marker)
-  //     console.log(spotObject[parseInt(marker.markerId)]._id)
-  //     console.log(this.map)
-  //     console.log("center", this.map.getZoom())
-  //   })
+      let marker = {
+        coordinate: {
+          lat: this.markers[i].location.coordinates[1],
+          lng: this.markers[i].location.coordinates[0]
+        },
+      }
+      spotsCoords.push(marker);
+    }
 
-  //   await this.map.setOnClusterClickListener((info) => {
-  //     console.log(info)
-  //     console.log(this.map)
-  //   })
+    let results = await this.map.addMarkers(spotsCoords)
+    await this.map.enableClustering();
+    await this.map.setOnMarkerClickListener((marker) => {
+      console.log(marker)
+    })
 
-  //   console.log("add marker resulsts", results)
+    await this.map.setOnClusterClickListener((info) => {
+      console.log(info)
+    })
 
-  // }
+    console.log("add marker resulsts", results)
+
+  }
 
 
 }
